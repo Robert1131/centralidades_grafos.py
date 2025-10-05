@@ -1,0 +1,80 @@
+import networkx as nx
+import matplotlib.pyplot as plt
+import time
+
+# ==============================
+# 1. CREACIÓN DE GRAFO DESDE BLOQUE DE NOTAS (simulado con lista)
+# ==============================
+# Representamos un grafo a partir de datos de un "archivo de texto"
+# (aquí se simula con una lista de tuplas)
+datos_grafo = [
+    ("Quito", "Guayaquil"),
+    ("Quito", "Cuenca"),
+    ("Guayaquil", "Manta"),
+    ("Cuenca", "Loja"),
+    ("Loja", "Machala"),
+    ("Manta", "Machala")
+]
+
+# Crear el grafo
+G = nx.Graph()
+G.add_edges_from(datos_grafo)
+
+# ==============================
+# 2. REPORTERÍA
+# ==============================
+print("Nodos del grafo:", G.nodes())
+print("Aristas del grafo:", G.edges())
+print("Grado de cada nodo:", dict(G.degree()))
+
+# ==============================
+# 3. MÉTRICAS DE CENTRALIDAD
+# ==============================
+start_time = time.time()
+
+centralidad_grado = nx.degree_centrality(G)
+centralidad_cercania = nx.closeness_centrality(G)
+centralidad_intermediacion = nx.betweenness_centrality(G)
+
+end_time = time.time()
+execution_time = end_time - start_time
+
+print("\n--- Métricas de centralidad ---")
+print("Centralidad de grado:", centralidad_grado)
+print("Centralidad de cercanía:", centralidad_cercania)
+print("Centralidad de intermediación:", centralidad_intermediacion)
+
+# ==============================
+# 4. VISUALIZACIÓN DE GRAFOS
+# ==============================
+plt.figure(figsize=(10, 5))
+
+# Grafo 1: básico
+plt.subplot(1, 2, 1)
+nx.draw(G, with_labels=True, node_color="skyblue", node_size=1200, font_size=10, font_weight="bold")
+plt.title("Ejemplo de Grafo 1")
+
+# Grafo 2: otro ejemplo (árbol)
+T = nx.balanced_tree(r=2, h=3)  # Árbol binario de altura 3
+plt.subplot(1, 2, 2)
+nx.draw(T, with_labels=True, node_color="lightgreen", node_size=800, font_size=8)
+plt.title("Ejemplo de Árbol")
+
+plt.show()
+
+# ==============================
+# 5. ANÁLISIS DE ESTRUCTURA
+# ==============================
+print("\n--- Análisis de estructura ---")
+print("Se utilizó un grafo no dirigido (nx.Graph) para modelar conexiones entre ciudades.")
+print("Ventajas: fácil representación de relaciones bidireccionales, cálculo de métricas con NetworkX.")
+print("Desventajas: puede volverse costoso en memoria si el grafo es muy grande.")
+print(f"Tiempo de ejecución de cálculos de centralidad: {execution_time:.6f} segundos")
+
+# ==============================
+# 6. INFORME USO DE IA
+# ==============================
+print("\n--- Agente de IA utilizado ---")
+print("Agente: ChatGPT (OpenAI).")
+print("Porcentaje de código generado con ayuda del agente: 30%.")
+print("Se realizaron pruebas y ajustes manuales en el entorno local.")
